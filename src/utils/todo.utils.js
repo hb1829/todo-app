@@ -13,6 +13,7 @@ export const addTodo = async (todoData) => {
     try {
         const newTodo = new Todo(todoData);
         await newTodo.save();
+        return newTodo; 
     } catch (error) {
         throw error;
     }
@@ -25,7 +26,8 @@ export const addTodo = async (todoData) => {
 */
 export const updateTodo = async (todoId,updatedTodoData) => {
     try {
-        await Todo.findByIdAndUpdate(todoId,updatedTodoData, {new: true});
+        const updatedTodo = await Todo.findByIdAndUpdate(todoId,updatedTodoData, {new: true});
+        return updatedTodo;
     } catch (error) {
         throw error;
     }
@@ -38,7 +40,8 @@ export const updateTodo = async (todoId,updatedTodoData) => {
 
 export const deleteTodo = async (todoId) => {
     try {
-        await Todo.findByIdAndDelete(todoId);
+        const result = await Todo.findByIdAndDelete(todoId);
+        return result ? true : false;
     } catch (error) {
         throw error;
     }
@@ -52,7 +55,8 @@ export const deleteTodo = async (todoId) => {
 
 export const markTodoAsComplete = async (todoId) => {
     try {
-        await Todo.findByIdAndUpdate(todoId, {complete: true});   
+        const updatedTodo = await Todo.findByIdAndUpdate(todoId, {complete: true}, {new: true});
+        return updatedTodo;
     } catch (error) {
         throw error;
     }
